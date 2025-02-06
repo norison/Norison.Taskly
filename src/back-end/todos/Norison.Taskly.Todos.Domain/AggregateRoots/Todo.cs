@@ -1,5 +1,5 @@
-using Norison.Taskly.Todos.Domain.Constants;
 using Norison.Taskly.Todos.Domain.Primitives;
+using Norison.Taskly.Todos.Domain.Shared;
 
 namespace Norison.Taskly.Todos.Domain.AggregateRoots;
 

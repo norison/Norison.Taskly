@@ -1,4 +1,4 @@
-namespace Norison.Taskly.Todos.Domain.Constants;
+namespace Norison.Taskly.Todos.Domain.Shared;
 
 public enum TodoStatus
 {

@@ -6,8 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Norison.Taskly.Todos.Domain.Shared\Norison.Taskly.Todos.Domain.Shared.csproj" />
-    </ItemGroup>
-
 </Project>
