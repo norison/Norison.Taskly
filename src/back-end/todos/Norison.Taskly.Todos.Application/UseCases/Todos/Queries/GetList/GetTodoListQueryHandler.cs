@@ -13,7 +13,10 @@ public class GetTodoListQueryHandler(IRepository<Todo> todosRepository)
     public async Task<PagedList<TodoDto>> Handle(GetTodoListQuery request, CancellationToken cancellationToken)
     {
         var args = request.Adapt<ListArgs>();
-        var count = await todosRepository.GetCountAsync(args, cancellationToken);
+        var argsForCount = request.Adapt<ListArgs>();
+        argsForCount.PageSize = null;
+        argsForCount.Page = null;
+        var count = await todosRepository.GetCountAsync(argsForCount, cancellationToken);
         var todos = await todosRepository.GetListAsync(args, cancellationToken);
         return new PagedList<TodoDto> { TotalCount = count, Data = todos.Adapt<TodoDto[]>() };
     }
