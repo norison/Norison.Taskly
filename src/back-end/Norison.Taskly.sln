@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{E721B5ED
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Api", "tasks\Norison.Taskly.Tasks.Api\Norison.Taskly.Tasks.Api.csproj", "{E20BB6E8-3C5D-4459-AF10-7C346A87038C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Domain", "tasks\Norison.Taskly.Tasks.Domain\Norison.Taskly.Tasks.Domain.csproj", "{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +19,16 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
+		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
