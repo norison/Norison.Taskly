@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Api", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Domain", "tasks\Norison.Taskly.Tasks.Domain\Norison.Taskly.Tasks.Domain.csproj", "{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Persistence", "tasks\Norison.Taskly.Tasks.Persistence\Norison.Taskly.Tasks.Persistence.csproj", "{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Application", "tasks\Norison.Taskly.Tasks.Application\Norison.Taskly.Tasks.Application.csproj", "{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
 		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
+		{29B3F522-FC11-4CF5-87DE-C121CEE7E83D} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
+		{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E20BB6E8-3C5D-4459-AF10-7C346A87038C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +36,13 @@ Global
 		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

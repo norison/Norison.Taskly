@@ -6,4 +6,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Norison.Taskly.Tasks.Application\Norison.Taskly.Tasks.Application.csproj" />
+      <ProjectReference Include="..\Norison.Taskly.Tasks.Persistence\Norison.Taskly.Tasks.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>
