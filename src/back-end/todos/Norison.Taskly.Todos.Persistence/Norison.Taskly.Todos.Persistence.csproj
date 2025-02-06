@@ -7,10 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Norison.Taskly.Todos.Application\Norison.Taskly.Todos.Application.csproj" />
       <ProjectReference Include="..\Norison.Taskly.Todos.Domain\Norison.Taskly.Todos.Domain.csproj" />
     </ItemGroup>
 

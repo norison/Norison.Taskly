@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Todos", "Todos", "{E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}"
+	ProjectSection(SolutionItems) = preProject
+		todos\Directory.Packages.props.xml = todos\Directory.Packages.props.xml
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Todos.Api", "todos\Norison.Taskly.Todos.Api\Norison.Taskly.Todos.Api.csproj", "{73157E71-7A90-4281-94C1-8E42AE0CC154}"
 EndProject

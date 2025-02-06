@@ -7,17 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Norison.Taskly.Todos.Domain\Norison.Taskly.Todos.Domain.csproj" />
+        <ProjectReference Include="..\Norison.Taskly.Todos.Domain\Norison.Taskly.Todos.Domain.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
-      <PackageReference Include="MediatR" Version="12.4.1" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+        <PackageReference Include="Mapster.DependencyInjection"/>
+        <PackageReference Include="MediatR"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Mediator\Behaviors\" />
-      <Folder Include="Services\" />
+        <Folder Include="Mediator\Behaviors\"/>
     </ItemGroup>
 
 </Project>
