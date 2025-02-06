@@ -2,18 +2,11 @@ using Norison.Taskly.Tasks.Domain.Primitives;
 
 namespace Norison.Taskly.Tasks.Domain.AggregateRoots;
 
-public class TaskDomain : AggregateRoot
+public class TaskDomain(Guid id, string name, string description) : AggregateRoot(id)
 {
-    public string Name { get; }
-    public string Description { get;}
-    public TaskStatus Status { get; }
+    public string Name { get; } = name;
+    public string Description { get;} = description;
+    public TaskStatus Status { get; } = TaskStatus.Created;
     public DateTime CreatedDateTime { get; set; }
     public DateTime LastEditedDatetime { get; set; }
-    
-    public TaskDomain(Guid id, string name, string description) : base(id)
-    {
-        Name = name;
-        Description = description;
-        Status = TaskStatus.Created;
-    }
 }
