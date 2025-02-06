@@ -1,6 +1,6 @@
 namespace Norison.Taskly.Tasks.Domain.Constants;
 
-public enum TaskStatus
+public enum TodoStatus
 {
     Created,
     Completed,

@@ -1,8 +1,8 @@
 namespace Norison.Taskly.Tasks.Domain.Primitives;
 
-public abstract class Entity(Guid id) : IEquatable<Entity>
+public abstract class Entity : IEquatable<Entity>
 {
-    public Guid Id => id;
+    public Guid Id { get; protected set; }
     
     public bool Equals(Entity? other)
     {
