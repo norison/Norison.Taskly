@@ -1,4 +1,4 @@
-namespace Norison.Taskly.Tasks.Domain.Primitives;
+namespace Norison.Taskly.Todos.Domain.Primitives;
 
 public abstract class Entity : IEquatable<Entity>
 {

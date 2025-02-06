@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tasks", "Tasks", "{E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Todos", "Todos", "{E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Api", "tasks\Norison.Taskly.Tasks.Api\Norison.Taskly.Tasks.Api.csproj", "{E20BB6E8-3C5D-4459-AF10-7C346A87038C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Todos.Api", "tasks\Norison.Taskly.Todos.Api\Norison.Taskly.Todos.Api.csproj", "{E20BB6E8-3C5D-4459-AF10-7C346A87038C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Domain", "tasks\Norison.Taskly.Tasks.Domain\Norison.Taskly.Tasks.Domain.csproj", "{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Todos.Domain", "tasks\Norison.Taskly.Todos.Domain\Norison.Taskly.Todos.Domain.csproj", "{B652BB5B-DD04-4FF7-8DCF-3EA6ED129F57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Persistence", "tasks\Norison.Taskly.Tasks.Persistence\Norison.Taskly.Tasks.Persistence.csproj", "{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Todos.Persistence", "tasks\Norison.Taskly.Todos.Persistence\Norison.Taskly.Todos.Persistence.csproj", "{29B3F522-FC11-4CF5-87DE-C121CEE7E83D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Tasks.Application", "tasks\Norison.Taskly.Tasks.Application\Norison.Taskly.Tasks.Application.csproj", "{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Todos.Application", "tasks\Norison.Taskly.Todos.Application\Norison.Taskly.Todos.Application.csproj", "{247D2A25-2AFC-41EC-BF01-ED138DB5AF1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

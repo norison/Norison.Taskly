@@ -1,7 +1,7 @@
-using Norison.Taskly.Tasks.Domain.Constants;
-using Norison.Taskly.Tasks.Domain.Primitives;
+using Norison.Taskly.Todos.Domain.Constants;
+using Norison.Taskly.Todos.Domain.Primitives;
 
-namespace Norison.Taskly.Tasks.Domain.AggregateRoots;
+namespace Norison.Taskly.Todos.Domain.AggregateRoots;
 
 public class Todo : AggregateRoot
 {

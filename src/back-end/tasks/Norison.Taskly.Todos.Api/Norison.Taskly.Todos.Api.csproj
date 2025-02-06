@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Norison.Taskly.Tasks.Application\Norison.Taskly.Tasks.Application.csproj" />
-      <ProjectReference Include="..\Norison.Taskly.Tasks.Persistence\Norison.Taskly.Tasks.Persistence.csproj" />
+      <ProjectReference Include="..\Norison.Taskly.Todos.Application\Norison.Taskly.Todos.Application.csproj" />
+      <ProjectReference Include="..\Norison.Taskly.Todos.Persistence\Norison.Taskly.Todos.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

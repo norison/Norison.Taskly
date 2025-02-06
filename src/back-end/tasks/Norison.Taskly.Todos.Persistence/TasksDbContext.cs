@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
-using Norison.Taskly.Tasks.Domain.AggregateRoots;
+using Norison.Taskly.Todos.Domain.AggregateRoots;
 
-namespace Norison.Taskly.Tasks.Persistence;
+namespace Norison.Taskly.Todos.Persistence;
 
 public class TasksDbContext(DbContextOptions<TasksDbContext> options) : DbContext(options)
 {

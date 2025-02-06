@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Norison.Taskly.Tasks.Domain\Norison.Taskly.Tasks.Domain.csproj" />
+      <ProjectReference Include="..\Norison.Taskly.Todos.Domain\Norison.Taskly.Todos.Domain.csproj" />
     </ItemGroup>
 
 </Project>

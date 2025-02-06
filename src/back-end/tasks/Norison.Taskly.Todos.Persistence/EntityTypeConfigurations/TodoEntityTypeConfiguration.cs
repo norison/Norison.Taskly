@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using Norison.Taskly.Tasks.Domain.AggregateRoots;
+using Norison.Taskly.Todos.Domain.AggregateRoots;
 
-namespace Norison.Taskly.Tasks.Persistence.EntityTypeConfigurations;
+namespace Norison.Taskly.Todos.Persistence.EntityTypeConfigurations;
 
 public class TodoEntityTypeConfiguration : IEntityTypeConfiguration<Todo>
 {
