@@ -7,6 +7,8 @@ using Norison.Taskly.Todos.Domain.AggregateRoots;
 using Norison.Taskly.Todos.Domain.Repositories;
 using Norison.Taskly.Todos.Persistence.Repositories;
 
+using Sieve.Services;
+
 namespace Norison.Taskly.Todos.Persistence;
 
 public static class ServiceCollectionExtensions
@@ -20,6 +22,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IRepository<Todo>, GenericRepository<Todo>>();
+        services.AddScoped<ISieveProcessor, ApplicationSieveProcessor>();
 
         return services;
     }

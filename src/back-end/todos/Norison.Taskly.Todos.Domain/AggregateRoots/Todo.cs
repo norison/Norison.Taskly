@@ -5,7 +5,7 @@ namespace Norison.Taskly.Todos.Domain.AggregateRoots;
 
 public class Todo : AggregateRoot
 {
-    public string Name { get; private set; } = null!;
+    public string Title { get; private set; } = null!;
     public string Description { get; private set; } = null!;
     public TodoStatus Status { get; private set; }
     public DateTime CreatedDateTime { get; private set; }
@@ -13,9 +13,10 @@ public class Todo : AggregateRoot
 
     private Todo() { }
 
-    public Todo(Guid id, string name, string description, DateTime dateTime)
+    public Todo(Guid id, string title, string description, DateTime dateTime)
     {
-        Name = name;
+        Id = id;
+        Title = title;
         Description = description;
         Status = TodoStatus.Created;
         CreatedDateTime = dateTime;
@@ -24,7 +25,7 @@ public class Todo : AggregateRoot
 
     public void Update(string name, string description, DateTime dateTime)
     {
-        Name = name;
+        Title = name;
         Description = description;
         LastEditedDatetime = dateTime;
     }

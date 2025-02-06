@@ -1,11 +1,11 @@
 using Norison.Taskly.Todos.Domain.Shared;
 
-namespace Norison.Taskly.Todos.Application.UseCases.Todos.Commands.Create;
+namespace Norison.Taskly.Todos.Application.DTOs;
 
-public class CreateTodoCommandResult
+public class TodoDto
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public TodoStatus Status { get; set; }
     public DateTime CreatedDateTime { get; set; }

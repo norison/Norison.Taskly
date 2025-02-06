@@ -1,4 +1,4 @@
-namespace Norison.Taskly.Todos.Domain.Repositories;
+namespace Norison.Taskly.Todos.Application.DTOs;
 
 public class PagedList<T>
 {
