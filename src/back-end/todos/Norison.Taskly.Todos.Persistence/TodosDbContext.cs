@@ -4,7 +4,7 @@ using Norison.Taskly.Todos.Domain.AggregateRoots;
 
 namespace Norison.Taskly.Todos.Persistence;
 
-public class TasksDbContext(DbContextOptions<TasksDbContext> options) : DbContext(options)
+public class TodosDbContext(DbContextOptions<TodosDbContext> options) : DbContext(options)
 {
     public DbSet<Todo> Todos => Set<Todo>();
 
@@ -12,6 +12,6 @@ public class TasksDbContext(DbContextOptions<TasksDbContext> options) : DbContex
     {
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TasksDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TodosDbContext).Assembly);
     }
 }
