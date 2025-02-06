@@ -12,17 +12,10 @@ public class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork unitOfWork)
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var requestType = request.GetType();
-
-        if (requestType != typeof(ICommand) && requestType != typeof(ICommand<>))
-        {
-            return await next();
-        }
-
-        using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
+        var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
         var response = await next();
-        transaction.Commit();
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        transaction.Commit();
         return response;
     }
 }

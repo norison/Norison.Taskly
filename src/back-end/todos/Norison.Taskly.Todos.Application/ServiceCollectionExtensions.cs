@@ -1,3 +1,7 @@
+using FluentValidation;
+
+using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using Norison.Taskly.Todos.Application.Mediator.Behaviors;
@@ -15,9 +19,11 @@ public static class ServiceCollectionExtensions
             config.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
             config.Lifetime = ServiceLifetime.Scoped;
 
-            config.AddBehavior(typeof(ValidationBehavior<,>), ServiceLifetime.Scoped);
-            config.AddBehavior(typeof(UnitOfWorkBehavior<,>), ServiceLifetime.Scoped);
+            config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>), ServiceLifetime.Scoped);
+            config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>), ServiceLifetime.Scoped);
         });
+
+        services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
 
         services.AddScoped<IGuidGenerator, GuidGenerator>();
         services.AddScoped<IDateNowService, DateNowService>();
