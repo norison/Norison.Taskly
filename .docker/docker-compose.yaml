@@ -7,6 +7,8 @@ networks:
 volumes:
   elastic-data:
     driver: local
+  todos-db-data:
+    driver: local
 
 services:
   # ---------------------------
@@ -100,5 +102,38 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
+    networks:
+      - taskly-network
+  
+  # ---------------------------
+  # Todos API Database
+  # ---------------------------
+  todos-db:
+    image: postgres
+    container_name: todos-db
+    environment:
+      - POSTGRES_USER=${TODOS_DB_USER}
+      - POSTGRES_PASSWORD=${TODOS_DB_PASSWORD}
+      - POSTGRES_DB=${TODOS_DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - todos-db-data:/var/lib/postgresql/data
+    networks:
+      - taskly-network
+  
+  # ---------------------------
+  # Todos API
+  # ---------------------------
+  todos-api:
+    build:
+      context: ../
+      dockerfile: ./.docker/dockerfiles/TodosApi.Dockerfile
+    container_name: todos-api
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=otel-collector:4317
+      - ConnectionStrings__TodosDb=${TODOS_DB_CONNECTION_STRING}
+    ports:
+      - "8080:8080"
     networks:
       - taskly-network
