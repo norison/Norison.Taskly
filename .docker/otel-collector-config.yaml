@@ -1,0 +1,33 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+exporters:
+  debug:
+    verbosity: detailed
+  
+  elasticsearch:
+    endpoints: ["http://elasticsearch:9200"]
+    logs_index: "taskly-otel-collector"
+    
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: []
+      exporters: [debug, zipkin]
+    metrics:
+      receivers: [otlp]
+      processors: []
+      exporters: [debug]
+    logs:
+      receivers: [otlp]
+      processors: []
+      exporters: [debug, elasticsearch]
