@@ -16,6 +16,9 @@ exporters:
     endpoint: "http://zipkin:9411/api/v2/spans"
     tls:
       insecure: true
+      
+  prometheusremotewrite:
+    endpoint: "http://prometheus:9090/api/v1/write"
 
 service:
   pipelines:
@@ -26,7 +29,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: []
-      exporters: [debug]
+      exporters: [debug, prometheusremotewrite]
     logs:
       receivers: [otlp]
       processors: []

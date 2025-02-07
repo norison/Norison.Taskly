@@ -23,7 +23,7 @@ services:
       - taskly-network
   
   # ---------------------------
-  # Jaeger for Traces
+  # Zipkin for Traces
   # ---------------------------
   zipkin:
     image: openzipkin/zipkin
@@ -69,5 +69,36 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     ports:
       - "5601:5601"
+    networks:
+      - taskly-network
+  
+  # ---------------------------
+  # Prometheus for Metrics
+  # ---------------------------
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"
+      - "--web.enable-remote-write-receiver"  # Enable remote write receiver
+    ports:
+      - "9090:9090"
+    networks:
+      - taskly-network
+
+  # ---------------------------
+  # Grafana for Metrics Visualization
+  # ---------------------------
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
     networks:
       - taskly-network
