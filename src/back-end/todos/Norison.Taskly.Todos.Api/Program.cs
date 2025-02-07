@@ -1,6 +1,6 @@
 using Norison.Taskly.Todos.Api;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddApi(builder.Configuration);
+builder.AddApi();
 var app = builder.Build();
 await app.UseApi().RunAsync();
