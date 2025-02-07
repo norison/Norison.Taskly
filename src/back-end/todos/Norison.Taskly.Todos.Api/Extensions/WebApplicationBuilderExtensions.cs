@@ -7,7 +7,6 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 using Serilog;
-using Serilog.Events;
 
 namespace Norison.Taskly.Todos.Api.Extensions;
 
@@ -16,16 +15,10 @@ public static class WebApplicationBuilderExtensions
     public static WebApplicationBuilder AddApi(this WebApplicationBuilder builder)
     {
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Norison", LogEventLevel.Information)
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-            .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
             .WriteTo.Console()
             .WriteTo.OpenTelemetry(options =>
             {
-                options.ResourceAttributes = new Dictionary<string, object>
-                {
-                    ["service.name"] = "todos-api"
-                };
+                options.ResourceAttributes = new Dictionary<string, object> { ["service.name"] = "Taskly-Todos" };
             })
             .CreateLogger();
 
@@ -50,25 +43,25 @@ public static class WebApplicationBuilderExtensions
 
     private static void AddOpenTelemetry(this WebApplicationBuilder builder)
     {
-        var serviceName = builder.Configuration["Application:Name"]!;
-        var resourceBuilder = ResourceBuilder.CreateDefault().AddService(serviceName);
-
         builder.Services
             .AddOpenTelemetry()
+            .ConfigureResource(resource => resource.AddService("Taskly-Todos"))
             .WithMetrics(options =>
             {
                 options.AddHttpClientInstrumentation();
                 options.AddAspNetCoreInstrumentation();
                 options.AddOtlpExporter();
-                options.SetResourceBuilder(resourceBuilder);
             })
             .WithTracing(options =>
             {
                 options.AddHttpClientInstrumentation();
                 options.AddAspNetCoreInstrumentation();
-                options.AddEntityFrameworkCoreInstrumentation();
+                options.AddEntityFrameworkCoreInstrumentation("todos-db", efOptions =>
+                {
+                    efOptions.SetDbStatementForText = true;
+                    efOptions.SetDbStatementForStoredProcedure = true;
+                });
                 options.AddOtlpExporter();
-                options.SetResourceBuilder(resourceBuilder);
             });
     }
 }

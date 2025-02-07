@@ -4,6 +4,18 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>a8c5559e-e646-4ae0-9bc4-a9c2643054e5</UserSecretsId>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.11.1" />
+      <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.1" />
+      <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.0" />
+      <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.11.0" />
+      <PackageReference Include="Serilog" Version="4.2.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+      <PackageReference Include="Serilog.Sinks.OpenTelemetry" Version="4.1.1" />
+      <PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />
+    </ItemGroup>
 
 </Project>

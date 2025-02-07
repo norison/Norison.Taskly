@@ -52,6 +52,8 @@ services:
         hard: -1
     volumes:
       - elastic-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
     networks:
       - taskly-network
   
@@ -68,6 +70,9 @@ services:
       - "5601:5601"
     networks:
       - taskly-network
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
   
   # ---------------------------
   # Prometheus for Metrics
@@ -95,8 +100,6 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
-    depends_on:
-      - prometheus
     networks:
       - taskly-network
   
@@ -130,10 +133,24 @@ services:
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
       - ConnectionStrings__TodosDb=${TODOS_DB_CONNECTION_STRING}
-    ports:
-      - "8080:8080"
+      - ASPNET
     depends_on:
       todos-db:
         condition: service_healthy
+    networks:
+      - taskly-network
+  
+  # ---------------------------
+  # Gateway
+  # ---------------------------
+  gateway:
+    build:
+      context: ../
+      dockerfile: ./.docker/dockerfiles/Gateway.Dockerfile
+    container_name: gateway
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+    ports:
+      - "8080:8080"
     networks:
       - taskly-network
