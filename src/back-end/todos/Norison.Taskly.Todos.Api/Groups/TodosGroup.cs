@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 using Norison.Taskly.Todos.Api.Contracts;
+using Norison.Taskly.Todos.Application.DTOs;
 using Norison.Taskly.Todos.Application.UseCases.Todos.Commands.Cancel;
 using Norison.Taskly.Todos.Application.UseCases.Todos.Commands.Complete;
 using Norison.Taskly.Todos.Application.UseCases.Todos.Commands.Create;
@@ -20,13 +21,13 @@ public class TodosGroup : IGroup
     public void Map(IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup("/todos");
-        group.MapPost("/", CreateTodoAsync);
-        group.MapGet("/", GetListAsync);
-        group.MapGet("/{id:guid}", GetTodoByIdAsync);
-        group.MapPut("/{id:guid}", UpdateTodoAsync);
-        group.MapDelete("/{id:guid}", DeleteTodoAsync);
-        group.MapPut("/{id:guid}/complete", CompleteTodoAsync);
-        group.MapPut("/{id:guid}/cancel", CancelTodoAsync);
+        group.MapPost("/", CreateTodoAsync).ProducesValidationProblem().Produces<TodoDto>();
+        group.MapGet("/", GetListAsync).ProducesValidationProblem().Produces<PagedList<TodoDto>>();
+        group.MapGet("/{id:guid}", GetTodoByIdAsync).ProducesValidationProblem().Produces<TodoDto>();
+        group.MapPut("/{id:guid}", UpdateTodoAsync).ProducesValidationProblem().Produces<TodoDto>();
+        group.MapDelete("/{id:guid}", DeleteTodoAsync).ProducesValidationProblem().Produces<TodoDto>();;
+        group.MapPut("/{id:guid}/complete", CompleteTodoAsync).ProducesValidationProblem().Produces<TodoDto>();;
+        group.MapPut("/{id:guid}/cancel", CancelTodoAsync).ProducesValidationProblem().Produces<TodoDto>();;
     }
 
     private static async Task<IResult> CreateTodoAsync(
@@ -80,8 +81,8 @@ public class TodosGroup : IGroup
         CancellationToken cancellationToken)
     {
         var command = new DeleteTodoCommand { Id = id };
-        await sender.Send(command, cancellationToken);
-        return Results.NoContent();
+        var result = await sender.Send(command, cancellationToken);
+        return Results.Ok(result);
     }
     
     private static async Task<IResult> CompleteTodoAsync(
@@ -90,8 +91,8 @@ public class TodosGroup : IGroup
         CancellationToken cancellationToken)
     {
         var command = new CompleteTodoCommand { Id = id };
-        await sender.Send(command, cancellationToken);
-        return Results.NoContent();
+        var result = await sender.Send(command, cancellationToken);
+        return Results.Ok(result);
     }
     
     private static async Task<IResult> CancelTodoAsync(
@@ -100,7 +101,7 @@ public class TodosGroup : IGroup
         CancellationToken cancellationToken)
     {
         var command = new CancelTodoCommand { Id = id };
-        await sender.Send(command, cancellationToken);
-        return Results.NoContent();
+        var result = await sender.Send(command, cancellationToken);
+        return Results.Ok(result);
     }
 }
