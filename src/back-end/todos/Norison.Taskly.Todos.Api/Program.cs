@@ -1,4 +1,4 @@
-using Norison.Taskly.Todos.Api;
+using Norison.Taskly.Todos.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddApi();

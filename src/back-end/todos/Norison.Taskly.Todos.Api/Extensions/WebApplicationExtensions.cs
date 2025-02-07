@@ -7,7 +7,7 @@ using Norison.Taskly.Todos.Persistence;
 
 using Scalar.AspNetCore;
 
-namespace Norison.Taskly.Todos.Api;
+namespace Norison.Taskly.Todos.Api.Extensions;
 
 public static class WebApplicationExtensions
 {

@@ -114,6 +114,8 @@ services:
       - "5432:5432"
     volumes:
       - todos-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${TODOS_DB_USER}" ]
     networks:
       - taskly-network
   
@@ -130,5 +132,8 @@ services:
       - ConnectionStrings__TodosDb=${TODOS_DB_CONNECTION_STRING}
     ports:
       - "8080:8080"
+    depends_on:
+      todos-db:
+        condition: service_healthy
     networks:
       - taskly-network

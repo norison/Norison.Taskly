@@ -7,7 +7,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace Norison.Taskly.Todos.Api;
+namespace Norison.Taskly.Todos.Api.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
