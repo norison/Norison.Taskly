@@ -18,8 +18,7 @@ public static class ServiceCollectionExtensions
         {
             config.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
             config.Lifetime = ServiceLifetime.Scoped;
-
-            config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>), ServiceLifetime.Scoped);
+            
             config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>), ServiceLifetime.Scoped);
             config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>), ServiceLifetime.Scoped);
         });
