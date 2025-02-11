@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using Norison.Taskly.Todos.Domain.Primitives;
 using Norison.Taskly.Todos.Domain.Shared;
 
@@ -30,21 +32,16 @@ public class Todo : AggregateRoot
         LastEditedDatetime = dateTime;
     }
 
-    public void Complete(DateTime dateTime)
+    public void ChangeStatus(TodoStatus status)
     {
-        Status = TodoStatus.Completed;
-        LastEditedDatetime = dateTime;
-    }
+        switch (status)
+        {
+            case TodoStatus.Created:
+                throw new ValidationException("Cannot change status to created");
+            case TodoStatus.Completed or TodoStatus.Cancelled when Status == TodoStatus.Created:
+                throw new ValidationException("This status can be applied only for created status");
+        }
 
-    public void Cancel(DateTime dateTime)
-    {
-        Status = TodoStatus.Cancelled;
-        LastEditedDatetime = dateTime;
-    }
-
-    public void Delete(DateTime dateTime)
-    {
-        Status = TodoStatus.Deleted;
-        LastEditedDatetime = dateTime;
+        Status = status;
     }
 }

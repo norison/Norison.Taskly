@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
+using Norison.Taskly.Todos.Domain.Exceptions;
 using Norison.Taskly.Todos.Domain.Repositories;
 
 using Sieve.Models;
@@ -10,9 +11,16 @@ namespace Norison.Taskly.Todos.Persistence.Repositories;
 public class GenericRepository<T>(TodosDbContext dbContext, ISieveProcessor sieveProcessor)
     : IRepository<T> where T : class
 {
-    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<T> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await dbContext.Set<T>().FindAsync([id], cancellationToken: cancellationToken);
+        var entity = await dbContext.Set<T>().FindAsync([id], cancellationToken: cancellationToken);
+
+        if (entity is null)
+        {
+            throw new NotFoundDomainException("Entity was not found");
+        }
+
+        return entity;
     }
 
     public async Task<int> GetCountAsync(ListArgs args, CancellationToken cancellationToken)
@@ -43,11 +51,7 @@ public class GenericRepository<T>(TodosDbContext dbContext, ISieveProcessor siev
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await GetAsync(id, cancellationToken);
-
-        if (entity is not null)
-        {
-            dbContext.Set<T>().Remove(entity);
-        }
+        dbContext.Set<T>().Remove(entity);
     }
 
     private IQueryable<T> ApplySieve(ListArgs args, IQueryable<T> query)

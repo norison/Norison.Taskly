@@ -1,3 +1,5 @@
+using System.Data;
+
 using MediatR;
 
 using Norison.Taskly.Todos.Application.Interfaces;
@@ -12,10 +14,22 @@ public class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork unitOfWork)
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
+        IDbTransaction? transaction = null;
+
+        if (IsCommand(request))
+        {
+            transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
+        }
+
         var response = await next();
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        transaction.Commit();
+        transaction?.Commit();
         return response;
+    }
+
+    private static bool IsCommand(TRequest request)
+    {
+        var requestType = request.GetType();
+        return typeof(ICommand).IsAssignableFrom(requestType) || typeof(ICommand<>).IsAssignableFrom(requestType);
     }
 }

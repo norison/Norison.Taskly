@@ -2,7 +2,7 @@ using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
 
-using Norison.Taskly.Todos.Api.Groups;
+using Norison.Taskly.Todos.Api.Endpoints;
 using Norison.Taskly.Todos.Persistence;
 
 using Scalar.AspNetCore;
@@ -26,13 +26,18 @@ public static class WebApplicationExtensions
 
     private static void MapGroups(this WebApplication app)
     {
-        Assembly
+        var groups = Assembly
             .GetExecutingAssembly()
             .GetTypes()
-            .Where(x => x is { IsAbstract: false, IsClass: true } && typeof(IGroup).IsAssignableFrom(x))
+            .Where(x => x is { IsAbstract: false, IsClass: true } && typeof(IEndpoint).IsAssignableFrom(x))
             .Select(Activator.CreateInstance)
-            .Cast<IGroup>()
-            .ToList()
-            .ForEach(x => x.Map(app));
+            .Cast<IEndpoint>()
+            .GroupBy(x => x.Group);
+
+        foreach (var group in groups)
+        {
+            var newGroup = app.MapGroup(group.Key);
+            group.ToList().ForEach(x => x.Map(newGroup));
+        }
     }
 }

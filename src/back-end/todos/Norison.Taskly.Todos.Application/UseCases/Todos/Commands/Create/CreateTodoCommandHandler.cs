@@ -12,12 +12,12 @@ namespace Norison.Taskly.Todos.Application.UseCases.Todos.Commands.Create;
 public class CreateTodoCommandHandler(
     IRepository<Todo> todosRepository,
     IGuidGenerator guidGenerator,
-    IDateNowService dateNowService) : ICommandHandler<CreateTodoCommand, TodoDto>
+    IDateNowService dateNowService) : ICommandHandler<CreateTodoCommand, Guid>
 {
-    public async Task<TodoDto> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
         var todo = new Todo(guidGenerator.Create(), request.Name, request.Description, dateNowService.Now);
         await todosRepository.AddAsync(todo, cancellationToken);
-        return todo.Adapt<TodoDto>();
+        return todo.Id;
     }
 }
