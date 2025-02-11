@@ -13,7 +13,7 @@ public class CreateTodoCommandHandler(
 {
     public async Task<Guid> Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
-        var todo = new Todo(guidGenerator.Create(), request.Name, request.Description, dateNowService.Now);
+        var todo = new Todo(guidGenerator.Create(), request.Title, request.Description, dateNowService.Now);
         await todosRepository.AddAsync(todo, cancellationToken);
         return todo.Id;
     }

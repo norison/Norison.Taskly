@@ -25,9 +25,9 @@ public class Todo : AggregateRoot
         LastEditedDatetime = dateTime;
     }
 
-    public void Update(string name, string? description, DateTime dateTime)
+    public void Update(string title, string? description, DateTime dateTime)
     {
-        Title = name;
+        Title = title;
         Description = description;
         LastEditedDatetime = dateTime;
     }

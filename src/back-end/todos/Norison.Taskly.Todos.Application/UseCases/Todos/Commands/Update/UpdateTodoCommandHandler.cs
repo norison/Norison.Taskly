@@ -11,7 +11,7 @@ public class UpdateTodoCommandHandler(IRepository<Todo> todosRepository, IDateNo
     public async Task Handle(UpdateTodoCommand request, CancellationToken cancellationToken)
     {
         var todo = await todosRepository.GetAsync(request.Id, cancellationToken);
-        todo.Update(request.Name, request.Description, dateNowService.Now);
+        todo.Update(request.Title, request.Description, dateNowService.Now);
         await todosRepository.UpdateAsync(todo, cancellationToken);
     }
 }

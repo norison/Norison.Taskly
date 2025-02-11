@@ -102,6 +102,9 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboard.yaml
+      - ./grafana/dashboards/:/var/lib/grafana/dashboards/
     networks:
       - default_network
   
