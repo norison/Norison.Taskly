@@ -31,6 +31,12 @@ builder.Services
         options.AddOtlpExporter();
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(config => config.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
+
 var app = builder.Build();
+app.UseCors();
 app.MapReverseProxy();
 app.Run();

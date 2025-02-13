@@ -200,3 +200,18 @@ services:
     depends_on:
       keycloak-db:
         condition: service_healthy
+  
+  # ---------------------------
+  # Web Client
+  # ---------------------------
+  web-client:
+    build:
+      context: ../
+      dockerfile: ./.docker/dockerfiles/WebClient.Dockerfile
+    container_name: web-client
+    environment:
+      - VITE_BASE_URL=http://gateway:8080
+    ports:
+      - "3500:80"
+    networks:
+      - default_network
