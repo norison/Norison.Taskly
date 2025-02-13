@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{FD5B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Gateway", "gateway\Norison.Taskly.Gateway\Norison.Taskly.Gateway.csproj", "{7570159A-0C0F-4655-99E3-1F1E63611124}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{D225CE9D-6501-4971-891D-317CDC72FF04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Norison.Taskly.Identity.Api", "identity\Norison.Taskly.Identity.Api\Norison.Taskly.Identity.Api.csproj", "{86891D63-8D64-48E6-AD86-274BD33D09EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,7 @@ Global
 		{1FCFA90A-09BE-4D22-BEEE-29851016CDF0} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
 		{D8CFF6B1-B9D9-4F3A-A02D-6DD05550DEA4} = {E721B5ED-B280-4B43-BAF9-1CC7B66B9A81}
 		{7570159A-0C0F-4655-99E3-1F1E63611124} = {FD5BDBEE-7266-4A45-9524-34150A46B3F5}
+		{86891D63-8D64-48E6-AD86-274BD33D09EA} = {D225CE9D-6501-4971-891D-317CDC72FF04}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{73157E71-7A90-4281-94C1-8E42AE0CC154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -60,5 +65,9 @@ Global
 		{7570159A-0C0F-4655-99E3-1F1E63611124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7570159A-0C0F-4655-99E3-1F1E63611124}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7570159A-0C0F-4655-99E3-1F1E63611124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86891D63-8D64-48E6-AD86-274BD33D09EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86891D63-8D64-48E6-AD86-274BD33D09EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86891D63-8D64-48E6-AD86-274BD33D09EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86891D63-8D64-48E6-AD86-274BD33D09EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
