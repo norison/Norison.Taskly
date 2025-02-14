@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
 using Norison.Taskly.Todos.Api.Endpoints;
+using Norison.Taskly.Todos.Api.Endpoints.Filters;
 using Norison.Taskly.Todos.Persistence;
 
 using Scalar.AspNetCore;
@@ -13,6 +14,8 @@ public static class WebApplicationExtensions
 {
     public static WebApplication UseApi(this WebApplication app)
     {
+        app.UseExceptionHandler();
+        app.UseRequestLocalization();
         app.MapOpenApi();
         app.MapScalarApiReference();
         app.MapGroups();
@@ -36,7 +39,7 @@ public static class WebApplicationExtensions
 
         foreach (var group in groups)
         {
-            var newGroup = app.MapGroup(group.Key);
+            var newGroup = app.MapGroup(group.Key).AddEndpointFilter<ErrorEndpointFilter>();
             group.ToList().ForEach(x => x.Map(newGroup));
         }
     }

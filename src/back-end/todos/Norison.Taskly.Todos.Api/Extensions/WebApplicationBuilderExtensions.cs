@@ -27,8 +27,15 @@ public static class WebApplicationBuilderExtensions
         builder.Services.AddOpenApi();
         builder.Services.AddPersistence(builder.Configuration);
         builder.Services.AddApplication();
-        builder.AddOptions();
         builder.AddOpenTelemetry();
+
+        builder.Services.AddProblemDetails();
+        builder.Services.AddRequestLocalization(options =>
+        {
+            options.SetDefaultCulture("en");
+            options.AddSupportedCultures("en", "uk");
+            options.AddSupportedUICultures("en", "uk");
+        });
         return builder;
     }
 
