@@ -16,6 +16,7 @@ public class GetTodoListEndpoint : IEndpoint
     {
         builder.MapGet("/", async (
                 [FromServices] ISender sender,
+                [FromHeader(Name = "X-User-Id")] Guid userId,
                 [FromQuery] int page,
                 [FromQuery] int pageSize,
                 [FromQuery] string? filters,

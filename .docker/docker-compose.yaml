@@ -5,14 +5,22 @@ networks:
     driver: bridge
 
 volumes:
-  elastic-data:
-    driver: local
-  todos-db-data:
-    driver: local
-  keycloak-db-data:
+  taskly-db-data:
     driver: local
 
 services:
+  
+  # ---------------------------
+  # Redis
+  # ---------------------------
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - default_network
+  
   # ---------------------------
   # OpenTelemetry Collector
   # ---------------------------
@@ -23,58 +31,6 @@ services:
       - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
     networks:
       - default_network
-  
-  # ---------------------------
-  # Zipkin for Traces
-  # ---------------------------
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: zipkin
-    ports:
-      - "9411:9411"
-    networks:
-      - default_network
-  
-  # ---------------------------
-  # Elasticsearch for Logs
-  # ---------------------------
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.1
-    container_name: elasticsearch
-    environment:
-      - node.name=elasticsearch
-      - cluster.name=es-docker-cluster
-      - discovery.type=single-node
-      - bootstrap.memory_lock=true
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
-      - xpack.security.enabled=false
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - elastic-data:/usr/share/elasticsearch/data
-    healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1" ]
-    networks:
-      - default_network
-  
-  # ---------------------------
-  # Kibana for Log Visualization
-  # ---------------------------
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.17.1
-    container_name: kibana
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    ports:
-      - "5601:5601"
-    networks:
-      - default_network
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
   
   # ---------------------------
   # Prometheus for Metrics
@@ -109,21 +65,20 @@ services:
       - default_network
   
   # ---------------------------
-  # Todos API Database
+  # Database
   # ---------------------------
-  todos-db:
+  taskly-db:
     image: postgres
-    container_name: todos-db
+    container_name: taskly-db
     environment:
-      - POSTGRES_USER=${TODOS_DB_USER}
-      - POSTGRES_PASSWORD=${TODOS_DB_PASSWORD}
-      - POSTGRES_DB=${TODOS_DB_NAME}
+      - POSTGRES_USER=${TASKLY_DB_USER}
+      - POSTGRES_PASSWORD=${TASKLY_DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
-      - todos-db-data:/var/lib/postgresql/data
+      - taskly-db-data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${TODOS_DB_USER}" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${TASKLY_DB_USER}" ]
     networks:
       - default_network
   
@@ -138,68 +93,50 @@ services:
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
       - ConnectionStrings__TodosDb=${TODOS_DB_CONNECTION_STRING}
-      - ASPNET
     depends_on:
-      todos-db:
+      taskly-db:
         condition: service_healthy
+    networks:
+      - default_network
+
+  # ---------------------------
+  # Identity API
+  # ---------------------------
+  identity-api:
+    build:
+      context: ../
+      dockerfile: ./.docker/dockerfiles/IdentityApi.Dockerfile
+    container_name: identity-api
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - ConnectionStrings__IdentityDb=${IDENTITY_DB_CONNECTION_STRING}
+      - ConnectionStrings__Redis=${REDIS_CONNECTION_STRING}
+    depends_on:
+      taskly-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - default_network
   
   # ---------------------------
   # Gateway
   # ---------------------------
-  gateway:
+  gateway-api:
     build:
       context: ../
       dockerfile: ./.docker/dockerfiles/Gateway.Dockerfile
-    container_name: gateway
+    container_name: gateway-api
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - ConnectionStrings__Redis=${REDIS_CONNECTION_STRING}
     ports:
       - "8080:8080"
-    networks:
-      - default_network
-  
-  # ---------------------------
-  # Keycloak Database
-  # ---------------------------
-  keycloak-db:
-    image: postgres
-    container_name: keycloak-db
-    environment:
-      - POSTGRES_DB=${KC_DB_NAME}
-      - POSTGRES_USER=${KC_DB_USERNAME}
-      - POSTGRES_PASSWORD=${KC_DB_PASSWORD}
-    ports:
-      - "5433:5432"
-    volumes:
-      - keycloak-db-data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${KC_DB_USERNAME}" ]
-    networks:
-      - default_network
-  
-  # ---------------------------
-  # Keycloak
-  # ---------------------------
-  keycloak:
-    image: quay.io/keycloak/keycloak
-    container_name: keycloak
-    command: [ "start-dev" ]
-    environment:
-      - KC_DB=postgres
-      - KC_DB_URL=jdbc:postgresql://keycloak-db:5432/${KC_DB_NAME}
-      - KC_DB_USERNAME=${KC_DB_USERNAME}
-      - KC_DB_PASSWORD=${KC_DB_PASSWORD}
-      - KC_BOOTSTRAP_ADMIN_USERNAME=${KC_ADMIN_USERNAME}
-      - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_ADMIN_PASSWORD}
-    ports:
-      - "8081:8080"
-    networks:
-      - default_network
     depends_on:
-      keycloak-db:
-        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - default_network
   
   # ---------------------------
   # Web Client
@@ -210,7 +147,7 @@ services:
       dockerfile: ./.docker/dockerfiles/WebClient.Dockerfile
     container_name: web-client
     environment:
-      - VITE_BASE_URL=http://gateway:8080
+      - VITE_BASE_URL=http://gateway-api:8080
     ports:
       - "3500:80"
     networks:

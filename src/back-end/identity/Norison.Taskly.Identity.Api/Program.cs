@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ using Scalar.AspNetCore;
 
 using Serilog;
 
+using StackExchange.Redis;
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.OpenTelemetry(options =>
@@ -21,6 +24,12 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
+var redis = ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")!);
+
+builder.Services.AddDataProtection()
+    .PersistKeysToStackExchangeRedis(redis, "DataProtection-Keys")
+    .SetApplicationName("SharedAPI");
+
 builder.Logging.ClearProviders();
 builder.Services.AddSerilog();
 builder.Services.AddOpenApi();
@@ -29,7 +38,7 @@ builder.Services.AddProblemDetails();
 builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("IdentityDb")));
 
 builder.Services
     .AddOpenTelemetry()
@@ -53,6 +62,12 @@ builder.Services
     });
 
 var app = builder.Build();
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
 
 app.UseExceptionHandler();
 app.MapScalarApiReference();
