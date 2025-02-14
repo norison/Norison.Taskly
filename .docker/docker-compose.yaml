@@ -130,6 +130,8 @@ services:
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
       - ConnectionStrings__Redis=${REDIS_CONNECTION_STRING}
+      - ReverseProxy__Clusters__identity-api-cluster__Destinations__destination1__Address=http://identity-api:8080
+      - ReverseProxy__Clusters__todos-api-cluster__Destinations__destination1__Address=http://todos-api:8080
     ports:
       - "8080:8080"
     depends_on:
