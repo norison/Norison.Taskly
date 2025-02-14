@@ -8,29 +8,23 @@ exporters:
   debug:
     verbosity: detailed
   
-  elasticsearch:
-    endpoints: ["http://elasticsearch:9200"]
-    logs_index: "taskly-otel-collector"
-    
-  zipkin:
-    endpoint: "http://zipkin:9411/api/v2/spans"
-    tls:
-      insecure: true
-      
   prometheusremotewrite:
     endpoint: "http://prometheus:9090/api/v1/write"
+  
+  otlphttp:
+    endpoint: http://seq/ingest/otlp
 
 service:
   pipelines:
     traces:
-      receivers: [otlp]
-      processors: []
-      exporters: [debug, zipkin]
+      receivers: [ otlp ]
+      processors: [ ]
+      exporters: [ debug, otlphttp ]
     metrics:
-      receivers: [otlp]
-      processors: []
-      exporters: [debug, prometheusremotewrite]
+      receivers: [ otlp ]
+      processors: [ ]
+      exporters: [ debug, prometheusremotewrite ]
     logs:
-      receivers: [otlp]
-      processors: []
-      exporters: [debug, elasticsearch]
+      receivers: [ otlp ]
+      processors: [ ]
+      exporters: [ debug, otlphttp ]

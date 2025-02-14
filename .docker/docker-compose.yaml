@@ -21,6 +21,16 @@ services:
     networks:
       - default_network
   
+  seq:
+    image: datalust/seq
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:80"
+    networks:
+      - default_network
+  
   # ---------------------------
   # OpenTelemetry Collector
   # ---------------------------
@@ -29,6 +39,9 @@ services:
     container_name: otel-collector
     volumes:
       - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+    depends_on:
+      seq:
+        condition: service_started
     networks:
       - default_network
   
@@ -61,6 +74,9 @@ services:
     volumes:
       - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboard.yaml
       - ./grafana/dashboards/:/var/lib/grafana/dashboards/
+    depends_on:
+      prometheus:
+        condition: service_started
     networks:
       - default_network
   
@@ -152,5 +168,8 @@ services:
       - VITE_BASE_URL=http://gateway-api:8080
     ports:
       - "3500:80"
+    depends_on:
+      gateway-api:
+        condition: service_started
     networks:
       - default_network
